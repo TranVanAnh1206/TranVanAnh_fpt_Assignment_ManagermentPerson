@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+            integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+            integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+    </head>
+    <body>
+        <main class="container">
+            <h2 class="mt-3 text-center">Management person</h2>
+
+            <div class="">
+                <div class="col-md 8">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">TÌm kiếm</span>
+                        <input id="inputSearch" type="text" class="form-control" placeholder="Nhập họ tên, số điện thoại, hoặc email" aria-label="Username" aria-describedby="basic-addon1" />
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Thêm mới</button>
+            </div>
+
+            <table id="tblPerson" class="table mt-3 table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Họ và tên</th>
+                        <th scope="col">SĐT</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Vai trò</th>
+                        <th scope="col">Địa chỉ</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <div id="pagination" class="d-flex justify-content-center mt-3">
+                <button id="prevPage" class="btn btn-primary">Prev</button>
+                <span id="pageInfo" style="display: flex; justify-content: center; align-items: center" class="mx-2">Trang 1</span>
+                <button id="nextPage" class="btn btn-primary">Next</button>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <form id="frmCreate" class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="addModalLabel">Modal Create</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input required type="text" class="form-control" id="name" aria-describedby="nameHelp" />
+                                <div id="nameHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phoneNumber" class="form-label">Phone number</label>
+                                <input required type="text" class="form-control" id="phoneNumber" aria-describedby="phoneNumberHelp" />
+                                <div id="phoneNumberHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email address</label>
+                                <input required type="email" class="form-control" id="email" aria-describedby="emailHelp" />
+                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Address Id</label>
+                                <input required type="text" class="form-control" id="address" aria-describedby="addressHelp" />
+                                <div id="addressHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="slcRole" class="form-label">Vai trò</label>
+                                <select id="slcRole" class="form-select" aria-label="Default select example">
+                                    <option selected>--- Chọn vai trò ----</option>
+                                    <option value="1">Professor</option>
+                                    <option value="2">Student</option>
+                                </select>
+                            </div>
+
+                            <div id="blockProfessor" class="d-none">
+                                <div class="mb-3">
+                                    <label for="Salary" class="form-label">Salary</label>
+                                    <input type="number" min="0" max="1000000000" class="form-control" id="Salary" aria-describedby="salarylHelp" />
+                                    <div id="salarylHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                </div>
+                            </div>
+
+                            <div id="blockStudent" class="d-none">
+                                <div class="mb-3">
+                                    <label for="StudentNumber" class="form-label">Student number</label>
+                                    <input type="number" class="form-control" id="StudentNumber" aria-describedby="StudentNumberlHelp" />
+                                    <div id="StudentNumberlHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="AvegerMark" class="form-label">Avenger Mark</label>
+                                    <input type="number" class="form-control" id="AvegerMark" aria-describedby="AvegerMarklHelp" />
+                                    <div id="AvegerMarklHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Edit Modal -->
+            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <form id="frmEdit" class="modal-content">
+                        <input id="editId" type="hidden" name="id" value="" />
+
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="editModalLabel">Modal Edit</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input required type="text" class="form-control" id="editname" aria-describedby="nameHelp" />
+                                <div id="nameHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phoneNumber" class="form-label">Phone number</label>
+                                <input required type="text" class="form-control" id="editphoneNumber" aria-describedby="phoneNumberHelp" />
+                                <div id="editphoneNumberHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email address</label>
+                                <input required type="email" class="form-control" id="editemail" aria-describedby="emailHelp" />
+                                <div id="editemailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Address Id</label>
+                                <input required type="text" class="form-control" id="editaddress" aria-describedby="addressHelp" />
+                                <div id="editaddressHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="slcRole" class="form-label">Vai trò</label>
+                                <select id="editslcRole" class="form-select" aria-label="Default select example">
+                                    <option selected>--- Chọn vai trò ----</option>
+                                    <option value="1">Professor</option>
+                                    <option value="2">Student</option>
+                                </select>
+                            </div>
+
+                            <div id="editblockProfessor" class="d-none">
+                                <div class="mb-3">
+                                    <label for="editSalary" class="form-label">Salary</label>
+                                    <input type="number" min="0" max="1000000000" class="form-control" id="editSalary" aria-describedby="editsalarylHelp" />
+                                    <div id="editsalarylHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                </div>
+                            </div>
+
+                            <div id="editblockStudent" class="d-none">
+                                <div class="mb-3">
+                                    <label for="StudentNumber" class="form-label">Student number</label>
+                                    <input type="number" class="form-control" id="editStudentNumber" aria-describedby="StudentNumberlHelp" />
+                                    <div id="editStudentNumberlHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="AvegerMark" class="form-label">Avenger Mark</label>
+                                    <input type="number" class="form-control" id="editAvegerMark" aria-describedby="AvegerMarklHelp" />
+                                    <div id="editAvegerMarklHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"
+            integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+            integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+
+        <script src="./index.js"></script>
+    </body>
+</html>
