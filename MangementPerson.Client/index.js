@@ -1,6 +1,24 @@
 "use strict";
 
 $(function () {
+    function POST_PUT(url, method_type, data, toastr_type, toastr_msg, modal) {
+        $.ajax({
+            url: `${baseUrl}${url}`,
+            method: method_type,
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (response) {
+                if (response === 1) GetAllPeople(1, pageSize, "");
+                toastr[toastr_type](toastr_msg);
+
+                $(modal).modal("hide");
+            },
+            error: function (err) {
+                console.error(err.toString());
+            },
+        });
+    }
+
     //
     toastr.options = {
         closeButton: false,
@@ -44,8 +62,38 @@ $(function () {
         }
     });
 
-    $("#addModal").on("modal.bs.hide", function () {
-        $("#frmCreate").clear();
+    $("#editslcRole").on("change", function () {
+        let value = $(this).val();
+
+        if (value === "1") {
+            $("#editblockProfessor").removeClass("d-none");
+            $("#editblockProfessor").addClass("d-block");
+
+            $("#editblockStudent").removeClass("d-block");
+            $("#editblockStudent").addClass("d-none");
+        } else if (value === "2") {
+            $("#editblockProfessor").removeClass("d-block");
+            $("#editblockProfessor").addClass("d-none");
+
+            $("#editblockStudent").removeClass("d-none");
+            $("#editblockStudent").addClass("d-block");
+        } else {
+            $("#editblockProfessor").removeClass("d-block");
+            $("#editblockProfessor").addClass("d-none");
+
+            $("#editblockStudent").removeClass("d-block");
+            $("#editblockStudent").addClass("d-none");
+        }
+    });
+
+    $("#addModal").on("hide.bs.modal", function () {
+        $("#frmCreate")[0].reset();
+        $("#slcRole").val(0);
+    });
+
+    $("#editModal").on("hide.bs.modal", function () {
+        $("#frmEdit")[0].reset();
+        $("#editslcRole").val(0);
     });
 
     var baseUrl = "https://localhost:44362/api";
@@ -112,21 +160,7 @@ $(function () {
                 salary: $("#editSalary").val(),
             };
 
-            $.ajax({
-                url: `${baseUrl}/Professor/update/${id}`,
-                method: "PUT",
-                contentType: "application/json",
-                data: JSON.stringify(professorData),
-                success: function (response) {
-                    if (response === 1) GetAllPeople(1, pageSize, "");
-                    toastr["success"]("Edit professor successfully!");
-
-                    $("#editModal").modal("hide");
-                },
-                error: function (err) {
-                    console.error(err.toString());
-                },
-            });
+            POST_PUT(`/Professor/update/${id}`, "PUT", professorData, "success", "Edit professor successfully!", "#editModal");
         } else if (role === "2") {
             let studentData = {
                 id: id,
@@ -138,21 +172,17 @@ $(function () {
                 avengerMark: $("#editAvegerMark").val(),
             };
 
-            $.ajax({
-                url: `${baseUrl}/Student/update/${id}`,
-                method: "PUT",
-                contentType: "application/json",
-                data: JSON.stringify(studentData),
-                success: function (response) {
-                    if (response === 1) GetAllPeople(1, pageSize, "");
-                    toastr["success"]("Edit student successfully!");
+            POST_PUT(`/Student/update/${id}`, "PUT", studentData, "success", "Edit student successfully!", "#editModal");
+        } else {
+            let personData = {
+                id: id,
+                name: $("#editname").val(),
+                phoneNumber: $("#editphoneNumber").val(),
+                emailAddress: $("#editemail").val(),
+                addressId: parseInt($("#editaddress").val()),
+            };
 
-                    $("#editModal").modal("hide");
-                },
-                error: function (err) {
-                    console.error(err.toString());
-                },
-            });
+            POST_PUT(`/People/update/${id}`, "PUT", personData, "success", "Edit person successfully!", "#editModal");
         }
     });
 
@@ -213,21 +243,7 @@ $(function () {
                 salary: $("#Salary").val(),
             };
 
-            $.ajax({
-                url: `${baseUrl}/Professor/create`,
-                method: "POST",
-                contentType: "application/json",
-                data: JSON.stringify(professorData),
-                success: function (response) {
-                    if (response === 1) GetAllPeople(1, pageSize, "");
-                    toastr["success"]("Create professor successfully!");
-
-                    $("#addModal").modal("hide");
-                },
-                error: function (err) {
-                    console.error(err.toString());
-                },
-            });
+            POST_PUT("/Professor/create", "POST", professorData, "success", "Create professor successfully!", "#addModal");
         } else if (role === "2") {
             let studentData = {
                 name: $("#name").val(),
@@ -238,21 +254,16 @@ $(function () {
                 avengerMark: $("#AvegerMark").val(),
             };
 
-            $.ajax({
-                url: `${baseUrl}/Student/create`,
-                method: "POST",
-                contentType: "application/json",
-                data: JSON.stringify(studentData),
-                success: function (response) {
-                    if (response === 1) GetAllPeople(1, pageSize, "");
-                    toastr["success"]("Create student successfully!");
+            POST_PUT("/Student/create", "POST", studentData, "success", "Create student successfully!", "#addModal");
+        } else {
+            let person = {
+                name: $("#name").val(),
+                phoneNumber: $("#phoneNumber").val(),
+                emailAddress: $("#email").val(),
+                addressId: parseInt($("#address").val()),
+            };
 
-                    $("#addModal").modal("hide");
-                },
-                error: function (err) {
-                    console.error(err.toString());
-                },
-            });
+            POST_PUT("/People/create", "POST", person, "success", "Create person successfully!", "#addModal");
         }
     });
 

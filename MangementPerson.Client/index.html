@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>Trần Văn Anh</title>
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
@@ -21,17 +21,19 @@
     </head>
     <body>
         <main class="container">
-            <h2 class="mt-3 text-center">Management person</h2>
+            <h2 class="mt-4 mb-3 text-center">Management person</h2>
 
-            <div class="">
-                <div class="col-md 8">
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">TÌm kiếm</span>
-                        <input id="inputSearch" type="text" class="form-control" placeholder="Nhập họ tên, số điện thoại, hoặc email" aria-label="Username" aria-describedby="basic-addon1" />
+            <div class="row mb-5">
+                <div class="col-md-9">
+                    <div class="col-md 8">
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1">TÌm kiếm</span>
+                            <input id="inputSearch" type="text" class="form-control" placeholder="Nhập họ tên, số điện thoại, hoặc email" aria-label="Username" aria-describedby="basic-addon1" />
+                        </div>
                     </div>
                 </div>
 
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Thêm mới</button>
+                <button class="btn btn-primary col-md-3" data-bs-toggle="modal" data-bs-target="#addModal">Thêm mới</button>
             </div>
 
             <table id="tblPerson" class="table mt-3 table-hover">
@@ -88,7 +90,7 @@
                             <div class="mb-3">
                                 <label for="slcRole" class="form-label">Vai trò</label>
                                 <select id="slcRole" class="form-select" aria-label="Default select example">
-                                    <option selected>--- Chọn vai trò ----</option>
+                                    <option selected value="0">--- Chọn vai trò ----</option>
                                     <option value="1">Professor</option>
                                     <option value="2">Student</option>
                                 </select>
@@ -160,7 +162,7 @@
                             <div class="mb-3">
                                 <label for="slcRole" class="form-label">Vai trò</label>
                                 <select id="editslcRole" class="form-select" aria-label="Default select example">
-                                    <option selected>--- Chọn vai trò ----</option>
+                                    <option selected value="0">--- Chọn vai trò ----</option>
                                     <option value="1">Professor</option>
                                     <option value="2">Student</option>
                                 </select>
